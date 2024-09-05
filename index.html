@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHOOSE A FACE</title>
+    <style>
+        /* Estilizando o quadrado */
+        .red-square {
+            width: 420px; /* Define a largura */
+            height: 100px; /* Define a altura */
+            background-color: rgb(199, 32, 54); /* Define a cor de fundo como vermelha */
+            position: absolute; /* Posiciona o quadrado de forma absoluta */
+            top: 0; /* Alinha ao topo */
+            left: 0; /* Alinha à esquerda */
+            text-align: center;
+            line-height: 100px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 32px;
+            color: white;
+        }
+
+        .image-custom {
+            width: 121px;
+            height: 121px;
+            margin-left: 60px;
+            margin-top: 220px;
+            position: absolute;
+        }
+
+        .image-custom1 {
+            width: 121px;
+            height: 121px;
+            margin-left: 210px;
+            margin-top: 220px;
+            position: absolute;
+        }
+
+        .alert {
+            width: 300px;
+            height: 100px;
+            border: 2px solid black;
+            top: 500px;
+            position: absolute;
+            left: 50px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+        }
+
+        .aviso {
+            width: 500px;
+            height: 50px;
+            position: absolute;
+            top: 150px;
+            left: 70px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .observ {
+            position: absolute;
+            width: 200px;
+            height: 100px;
+            border: 2px solid white;
+            top: 400px;
+            left: 50px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            color: black;
+        }
+
+        
+        /* Estilizando as mensagens de vencedor */
+        .winner-message {
+            position: absolute;
+            top: 200px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            color: black;
+            display: none; /* Escondido por padrão */
+        }
+
+        #winner1 {
+            left: 60px; /* Coloca ao lado da imagem1 */
+        }
+
+        #winner2 {
+            left: 210px; /* Coloca ao lado da imagem2 */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Div que representa o quadrado -->
+    <div class="red-square"><b>CHOOSE A FACE</b></div>  
+        
+    <div class="aviso"><b>VOTE NO MAIS FEIO:</b></div> 
+     
+
+    <div class="alert">Esse site é apenas uma brincadeira para testar a mídia (se não tem senso de humor, não jogue)</div>    
+    
+    <div class="observ">Se não houver mais imagens significa que a que sobrou é a vencedora</div>
+
+    <img src="images/ele1.png" id="image1" class="image-custom">
+    <img src="images/ele3.png" id="image2" class="image-custom1">
+
+    <!-- Div para exibir a pontuação -->
+    <p id="score1">Pontuação Imagem 1: 0</p>
+    <p id="score2">Pontuação Imagem 2: 0</p>
+
+    <!-- Mensagens de vencedor que serão exibidas ao lado das imagens -->
+    <div id="winner1" class="winner-message">VENCEDOR(A)!</div>
+    <div id="winner2" class="winner-message">VENCEDOR(A)!</div>
+
+    <script>
+        var images1 = [
+            'images/ela2',
+            'images/Captura de Tela (27).png',
+            'images/Captura de Tela (36).png',
+            'images/ela3.png',
+            'images/Shrek.png'
+        ];
+
+        var images2 = [
+            'images/ela1.png',
+            'images/Captura de Tela (8).png',
+            'images/suco de fruta.png',
+            'images/ca.png',
+            'images/Florinda.png'
+        ];
+
+        var scores1 = [0, 0, 0];  // Para as imagens1
+        var scores2 = [0, 0, 0];  // Para as imagens2
+        var currentIndex1 = 0;
+        var currentIndex2 = 0;
+
+        // Função para aumentar pontuação da imagem clicada e alterar a outra imagem
+        function imageClicked(imageClickedId, imageOtherId, scores, images, currentIndex, scoreElement, winnerElement) {
+            // Aumenta a pontuação da imagem clicada
+            scores[currentIndex] += 5;
+            document.getElementById(scoreElement).innerText = "Pontuação " + (imageClickedId === 'image1' ? 'Imagem 1' : 'Imagem 2') + ": " + scores[currentIndex];
+
+            // Verifica se a imagem atingiu 30 pontos
+            if (scores[currentIndex] >= 25) {
+                document.getElementById(winnerElement).style.display = 'block';  // Exibe a mensagem de vencedor
+                return;
+            }
+
+            // Passa para a próxima imagem no array da outra imagem
+            if (imageClickedId === 'image1') {
+                currentIndex2++;
+                if (currentIndex2 >= images2.length) {
+                    currentIndex2 = 0;
+                }
+                document.getElementById(imageOtherId).src = images2[currentIndex2];
+            } else {
+                currentIndex1++;
+                if (currentIndex1 >= images1.length) {
+                    currentIndex1 = 0;
+                }
+                document.getElementById(imageOtherId).src = images1[currentIndex1];
+            }
+        }
+
+        // Adiciona os eventos de clique para ambas as imagens
+        document.getElementById('image1').addEventListener('click', function() {
+            imageClicked('image1', 'image2', scores1, images1, currentIndex1, 'score1', 'winner1');
+        });
+
+        document.getElementById('image2').addEventListener('click', function() {
+            imageClicked('image2', 'image1', scores2, images2, currentIndex2, 'score2', 'winner2');
+        });
+    </script>
+
+</body>
+</html>
