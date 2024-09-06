@@ -141,7 +141,7 @@
             document.getElementById(scoreElement).innerText = "Pontuação " + (imageClickedId === 'image1' ? 'Imagem 1' : 'Imagem 2') + ": " + scores[currentIndex];
 
             // Verifica se a imagem atingiu 30 pontos
-            if (scores[currentIndex] >= 25) {
+            if (scores[currentIndex] >= 20) {
                 document.getElementById(winnerElement).style.display = 'block';  // Exibe a mensagem de vencedor
                 return;
             }
